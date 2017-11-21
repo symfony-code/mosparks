@@ -1,0 +1,16 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1.13.6
+    volumes:
+      - ./:/var/www
+      - ./docker/server/log/:/var/log/nginx
+    networks:
+      self:
+        ipv4_address: 172.73.255.2
+networks:
+  self:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.73.255.0/24
