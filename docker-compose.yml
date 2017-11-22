@@ -3,11 +3,22 @@ services:
   nginx:
     image: nginx:1.13.6
     volumes:
-      - ./:/var/www
-      - ./docker/server/log/:/var/log/nginx
+      - ./:/var/www/html
+      - ./docker/server/log/:/var/html/log
+      - ./docker/config/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    links:
+      - php
     networks:
       self:
         ipv4_address: 172.73.255.2
+  php:
+    image: php:7.0.25-fpm
+    user: 1000:1000
+    volumes:
+      - ./:/var/www/html
+    networks:
+      self:
+        ipv4_address: 172.73.255.3
 networks:
   self:
     driver: bridge
