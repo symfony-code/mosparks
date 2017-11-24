@@ -12,12 +12,14 @@ services:
       self:
         ipv4_address: 172.73.255.2
   php:
-    image: php:7.0.25-fpm
+    build:
+      context: docker/build/php
     user: 1000:1000
     links:
       - mysql
     volumes:
       - ./:/var/www/html
+      - ./docker/config/php/php.ini:/usr/local/etc/php/php.ini
     networks:
       self:
         ipv4_address: 172.73.255.3
