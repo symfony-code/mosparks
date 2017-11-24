@@ -1,3 +1,7 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+news:
+    resource: '@NewsBundle/Backend/Controller/'
+    type: annotation

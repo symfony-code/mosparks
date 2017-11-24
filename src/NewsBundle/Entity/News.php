@@ -1,14 +1,14 @@
 <?php
 
-namespace AppBundle\Entity\News;
+namespace NewsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * News
  *
- * @ORM\Table(name="news_news")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\News\NewsRepository")
+ * @ORM\Table(name="news")
+ * @ORM\Entity(repositoryClass="NewsBundle\Repository\NewsRepository")
  */
 class News
 {
