@@ -8,7 +8,6 @@
 
 namespace NewsBundle\Backend\Controller;
 
-use NewsBundle\Entity\News;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,18 +24,7 @@ class NewsController extends Controller
      */
     public function indexAction()
     {
-        $manager = $this->getDoctrine()->getManager();
-        $news = new News();
-        $news->setTitle('test')
-            ->setAnnounce('test')
-            ->setText('test')
-            ->setHidden(false)
-            ->setCreatedAt(new \DateTime())
-            ->setUpdatedAt(new \DateTime());
 
-        $manager->persist($news);
-        $manager->flush();
-
-        return new Response('Success');
+        return $this->render('news/news/index.html.twig');
     }
 }
