@@ -1,0 +1,21 @@
+{
+  "name": "mosparks",
+  "homepage": "https://github.com/symfony-code/mosparks",
+  "authors": [
+    "Ivan Kozhukhov <cheremhovo1990@yandex.ru>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

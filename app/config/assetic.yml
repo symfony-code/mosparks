@@ -1,0 +1,16 @@
+assetic:
+    assets:
+        jquery:
+            inputs:
+                - 'assets/vendor/jquery/dist/jquery.js'
+        bootstrap_css:
+            inputs:
+                - 'assets/vendor/bootstrap/dist/css/bootstrap.css'
+        bootstrap_js:
+            inputs:
+                - '@jquery'
+                - 'assets/vendor/bootstrap/dist/js/bootstrap.js'
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
