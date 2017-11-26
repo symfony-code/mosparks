@@ -1,11 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <ol class="breadcrumb">
+        <li class="active">Аминистратор</li>
+    </ol>
+
     <h1></h1>
     <p>
         <a href="{{ path('newsCreate') }}" class="btn btn-primary">Создать</a>
     </p>
-    {% for model in models %}
-        {{ model.title }}
-    {% endfor %}
+    <table class="table">
+
+        {% for model in models %}
+            <tr>
+                <td>{{ model.title }}</td>
+                <td><a href="{{ path('newsUpdate', {"id": model.id}) }}"><span
+                                class="glyphicon glyphicon-eye-open"></span></a></td>
+            </tr>
+
+        {% endfor %}
+    </table>
+
 {% endblock %}

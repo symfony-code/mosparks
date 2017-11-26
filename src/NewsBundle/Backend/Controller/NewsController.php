@@ -66,4 +66,35 @@ class NewsController extends Controller
 
         return $this->render('news/news/create.html.twig', ['form' => $form->createView()]);
     }
+
+    /**
+     * @Route("/news/update/{id}", name="newsUpdate", requirements={"id": "\d+"})
+     * @param int $id
+     * @param Request $request
+     * @return Response
+     */
+    public function updateAction(int $id, Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository(News::class);
+        $news = $repository->find($id);
+
+        if (is_null($news)) {
+            throw $this->createNotFoundException();
+        }
+        $form = $this->createFormBuilder($news)
+            ->add('title', TextType::class)
+            ->add('announce', TextareaType::class)
+            ->add('text', TextareaType::class)
+            ->add('save', SubmitType::class, array('label' => 'Создать'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+        }
+
+        return $this->render('news/news/update.html.twig', ['form' => $form->createView()]);
+    }
 }
