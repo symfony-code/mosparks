@@ -24,16 +24,16 @@ class News
     /**
      * @var string
      *
-     * @ORM\Column(name="announce", type="text")
+     * @ORM\Column(name="title", type="string", length=255)
      */
-    private $announce;
+    private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="announce", type="text")
      */
-    private $title;
+    private $announce;
 
     /**
      * @var string
@@ -75,6 +75,30 @@ class News
     }
 
     /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return News
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set announce
      *
      * @param string $announce
@@ -98,29 +122,7 @@ class News
         return $this->announce;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return News
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
 
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
 
     /**
      * Set text

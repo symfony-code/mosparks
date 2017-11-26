@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    success
+    <h1></h1>
+    <p>
+        <a href="{{ path('newsCreate') }}" class="btn btn-primary">Создать</a>
+    </p>
+    {% for model in models %}
+        {{ model.title }}
+    {% endfor %}
 {% endblock %}
