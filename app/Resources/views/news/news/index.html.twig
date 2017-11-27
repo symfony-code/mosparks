@@ -12,8 +12,12 @@
         {% for model in models %}
             <tr>
                 <td>{{ model.title }}</td>
-                <td><a href="{{ path('newsUpdate', {"id": model.id}) }}"><span
-                                class="glyphicon glyphicon-eye-open"></span></a></td>
+                <td>
+                    <a href="{{ path('newsView', {"id": model.id}) }}"><span
+                                class="glyphicon glyphicon-eye-open"></span></a>
+                    <a href="{{ path('newsUpdate', {"id": model.id}) }}"><span
+                                class="glyphicon glyphicon-pencil"></span></a>
+                </td>
             </tr>
 
         {% endfor %}

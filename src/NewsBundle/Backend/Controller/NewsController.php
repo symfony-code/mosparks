@@ -70,6 +70,19 @@ class NewsController extends Controller
     }
 
     /**
+     * @Route("/news/view/{id}", name="newsView", requirements={"id": "\d+"})
+     * @param $id
+     * @return Response
+     */
+    public function viewAction(int $id)
+    {
+        $repository = $this->getDoctrine()->getRepository(News::class);
+        $news = $repository->find($id);
+        $this->notFoundException($news);
+        return $this->render('news/news/view.html.twig');
+    }
+
+    /**
      * @Route("/news/update/{id}", name="newsUpdate", requirements={"id": "\d+"})
      * @param int $id
      * @param Request $request
@@ -80,9 +93,9 @@ class NewsController extends Controller
         $repository = $this->getDoctrine()->getRepository(News::class);
         $news = $repository->find($id);
 
-        if (is_null($news)) {
-            throw $this->createNotFoundException();
-        }
+        $this->notFoundException($news);
+
+
         $form = $this->createFormBuilder($news)
             ->add('title', TextType::class)
             ->add('announce', TextareaType::class)
@@ -100,5 +113,15 @@ class NewsController extends Controller
         }
 
         return $this->render('news/news/update.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @param News|null $model
+     */
+    public function notFoundException(News $model = null)
+    {
+        if (is_null($model)) {
+            throw $this->createNotFoundException();
+        }
     }
 }
