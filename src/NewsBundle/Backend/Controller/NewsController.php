@@ -115,6 +115,22 @@ class NewsController extends Controller
         return $this->render('news/news/update.html.twig', ['form' => $form->createView()]);
     }
 
+
+    /**
+     * @Route("news/delete/{id}", name="newsDelete", requirements={"id": "\d+"})
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function deleteAction($id)
+    {
+        $repository = $this->getDoctrine()->getRepository(News::class);
+        $news = $repository->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($news);
+        $entityManager->flush();
+        return new RedirectResponse($this->generateUrl('newsIndex'));
+    }
+
     /**
      * @param News|null $model
      */
