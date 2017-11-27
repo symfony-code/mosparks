@@ -79,7 +79,7 @@ class NewsController extends Controller
         $repository = $this->getDoctrine()->getRepository(News::class);
         $news = $repository->find($id);
         $this->notFoundException($news);
-        return $this->render('news/news/view.html.twig');
+        return $this->render('news/news/view.html.twig', ['model' => $news]);
     }
 
     /**
