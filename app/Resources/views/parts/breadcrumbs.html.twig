@@ -1,0 +1,13 @@
+<ol class="breadcrumb">
+
+    {% if breadcrumbs %}
+        <li><a href="{{ path('homepage') }}">Администрирование</a></li>
+        {% for breadcrumb in breadcrumbs %}
+            {% if breadcrumb.url %}
+                <li><a href="{{ path(breadcrumb.url) }}">{{ breadcrumb.label }}</a></li>
+            {% else %}
+                <li class="active">{{ breadcrumb.label }}</li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</ol>
