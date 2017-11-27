@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,7 +48,7 @@ class NewsController extends Controller
     public function createAction(Request $request)
     {
         $news = new News();
-        $news->setHidden(0)->setCreatedAt(new \DateTime())->setUpdatedAt(new \DateTime());
+        $news->setHidden(0);
         $form = $this->createFormBuilder($news)
             ->add('title', TextType::class)
             ->add('announce', TextareaType::class)
@@ -62,6 +63,7 @@ class NewsController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($news);
             $entityManager->flush();
+            return new RedirectResponse($this->generateUrl('newsIndex'));
         }
 
         return $this->render('news/news/create.html.twig', ['form' => $form->createView()]);
@@ -93,6 +95,8 @@ class NewsController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
+
+            return new RedirectResponse($this->generateUrl('newsIndex'));
         }
 
         return $this->render('news/news/update.html.twig', ['form' => $form->createView()]);

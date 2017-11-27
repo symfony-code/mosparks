@@ -2,13 +2,18 @@
 
 namespace NewsBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
 
 /**
  * News
  *
  * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="NewsBundle\Repository\NewsRepository")
+ * @HasLifecycleCallbacks
  */
 class News
 {
@@ -50,19 +55,33 @@ class News
     private $hidden;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 
+    /** @PrePersist */
+    public function doStuffOnPrePersist()
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @PreUpdate
+     */
+    public function doStuffOnPreUpdate()
+    {
+        $this->updatedAt = new DateTime();
+    }
 
     /**
      * Get id
@@ -123,7 +142,6 @@ class News
     }
 
 
-
     /**
      * Set text
      *
@@ -175,7 +193,7 @@ class News
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      *
      * @return News
      */
@@ -189,7 +207,7 @@ class News
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getCreatedAt()
     {
@@ -199,7 +217,7 @@ class News
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param DateTime $updatedAt
      *
      * @return News
      */
@@ -213,11 +231,13 @@ class News
     /**
      * Get updatedAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
+
+
 }
 
