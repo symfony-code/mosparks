@@ -9,11 +9,8 @@
 namespace NewsBundle\Backend\Controller;
 
 use NewsBundle\Entity\News;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use NewsBundle\Type\NewsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,12 +46,7 @@ class NewsController extends Controller
     {
         $news = new News();
         $news->setHidden(0);
-        $form = $this->createFormBuilder($news)
-            ->add('title', TextType::class)
-            ->add('announce', TextareaType::class)
-            ->add('text', TextareaType::class)
-            ->add('save', SubmitType::class, array('label' => 'Создать'))
-            ->getForm();
+        $form = $this->createForm(NewsType::class, $news);
 
         $form->handleRequest($request);
 
@@ -96,12 +88,7 @@ class NewsController extends Controller
         $this->notFoundException($news);
 
 
-        $form = $this->createFormBuilder($news)
-            ->add('title', TextType::class)
-            ->add('announce', TextareaType::class)
-            ->add('text', TextareaType::class)
-            ->add('save', SubmitType::class, array('label' => 'Создать'))
-            ->getForm();
+        $form = $this->createForm(NewsType::class, $news);
 
         $form->handleRequest($request);
 
