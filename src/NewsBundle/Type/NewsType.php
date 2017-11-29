@@ -32,7 +32,7 @@ class NewsType extends AbstractType
             ->add('title', TextType::class)
             ->add('announce', TextareaType::class)
             ->add('text', TextareaType::class)
-            ->add('save', SubmitType::class, array('label' => $options['button']['label']));
+            ->add('save', SubmitType::class, ['label' => 'Создать']);
 
     }
 

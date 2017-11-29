@@ -8,12 +8,14 @@
 
 namespace NewsBundle\Backend\Controller;
 
+use Symfony\Component\Routing\Annotation\Route;
 use NewsBundle\Entity\News;
 use NewsBundle\Type\NewsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Class NewsController
