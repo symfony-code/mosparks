@@ -36,7 +36,7 @@ class NewsController extends Controller
         $models = $newRepository->findAll();
 
 
-        return $this->render('news/news/index.html.twig', ['models' => $models]);
+        return $this->render('news/backend/news/index.html.twig', ['models' => $models]);
     }
 
     /**
@@ -60,7 +60,7 @@ class NewsController extends Controller
             return new RedirectResponse($this->generateUrl('newsIndex'));
         }
 
-        return $this->render('news/news/create.html.twig', ['form' => $form->createView()]);
+        return $this->render('news/backend/news/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -73,7 +73,7 @@ class NewsController extends Controller
         $repository = $this->getDoctrine()->getRepository(News::class);
         $news = $repository->find($id);
         $this->notFoundException($news);
-        return $this->render('news/news/view.html.twig', ['model' => $news]);
+        return $this->render('news/backend/news/view.html.twig', ['model' => $news]);
     }
 
     /**
@@ -101,7 +101,7 @@ class NewsController extends Controller
             return new RedirectResponse($this->generateUrl('newsIndex'));
         }
 
-        return $this->render('news/news/update.html.twig', ['form' => $form->createView()]);
+        return $this->render('news/backend/news/update.html.twig', ['form' => $form->createView()]);
     }
 
 
