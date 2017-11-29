@@ -8,7 +8,9 @@
 
 namespace NewsBundle\Backend\Controller;
 
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Annotation\{
+    Route
+};
 use NewsBundle\Entity\News;
 use NewsBundle\Type\NewsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
