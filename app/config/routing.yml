@@ -3,5 +3,5 @@ app:
     type: annotation
 
 news:
-    resource: '@NewsBundle/Backend/Controller/'
+    resource: '@NewsBundle/Controller/Backend/'
     type: annotation

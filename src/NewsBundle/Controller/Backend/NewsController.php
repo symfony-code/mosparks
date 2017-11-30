@@ -6,7 +6,7 @@
  * Time: 16:56
  */
 
-namespace NewsBundle\Backend\Controller;
+namespace NewsBundle\Controller\Backend;
 
 use Symfony\Component\Routing\Annotation\Route;
 use NewsBundle\Entity\News;
@@ -47,7 +47,6 @@ class NewsController extends Controller
     public function createAction(Request $request)
     {
         $news = new News();
-        $news->setHidden(0);
         $form = $this->createForm(NewsType::class, $news);
 
         $form->handleRequest($request);
@@ -57,7 +56,7 @@ class NewsController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($news);
             $entityManager->flush();
-            return new RedirectResponse($this->generateUrl('newsIndex'));
+            return new RedirectResponse($this->generateUrl('newsView', ['id' => $news->getId()]));
         }
 
         return $this->render('news/backend/news/create.html.twig', ['form' => $form->createView()]);
@@ -86,9 +85,7 @@ class NewsController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository(News::class);
         $news = $repository->find($id);
-
         $this->notFoundException($news);
-
 
         $form = $this->createForm(NewsType::class, $news);
 
@@ -98,7 +95,7 @@ class NewsController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
-            return new RedirectResponse($this->generateUrl('newsIndex'));
+            return new RedirectResponse($this->generateUrl('newsView', ['id' => $news->getId()]));
         }
 
         return $this->render('news/backend/news/update.html.twig', ['form' => $form->createView()]);

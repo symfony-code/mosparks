@@ -9,7 +9,9 @@
 namespace NewsBundle\Type;
 
 
+use NewsBundle\Help\NewsHelp;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,8 +34,8 @@ class NewsType extends AbstractType
             ->add('title', TextType::class)
             ->add('announce', TextareaType::class)
             ->add('text', TextareaType::class)
+            ->add('hidden', ChoiceType::class, ['choices' => NewsHelp::getHiddenDropDown()])
             ->add('save', SubmitType::class, ['label' => 'Создать']);
-
     }
 
 }

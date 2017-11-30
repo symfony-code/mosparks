@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% set title = model.title %}
+
 {% block body %}
     {% set breadcrumbs = {'breadcrumbs' : [{'url': path('newsIndex'), 'label': 'Новости'},{'label': title}]} %}
     {% include 'parts/breadcrumbs.html.twig' with breadcrumbs %}
@@ -21,8 +22,12 @@
             <td>{{ model.announce }}</td>
         </tr>
         <tr>
-            <td>Текс</td>
+            <td>Текст</td>
             <td>{{ model.text }}</td>
+        </tr>
+        <tr>
+            <td>Скрыто</td>
+            <td>{{ model.hidden ? 'Да' : 'Нет' }}</td>
         </tr>
     </table>
 {% endblock %}

@@ -2,11 +2,12 @@
 
 namespace NewsBundle\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
+use DateTime;
+
 
 /**
  * News
@@ -17,6 +18,9 @@ use Doctrine\ORM\Mapping\PreUpdate;
  */
 class News
 {
+    const HIDDEN_NO = 0;
+    const HIDDEN_YES = 1;
+
     /**
      * @var int
      *
