@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use DateTime;
-
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * News
@@ -71,6 +71,12 @@ class News
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @var Group
+     * @ManyToOne(targetEntity="Group", inversedBy="news")
+     */
+    private $group;
 
     /** @PrePersist */
     public function doStuffOnPrePersist()
@@ -242,6 +248,21 @@ class News
         return $this->updatedAt;
     }
 
+    /**
+     * @return Group
+     */
+    public function getGroup(): Group
+    {
+        return $this->group;
+    }
 
+    /**
+     * @param Group $group
+     */
+    public function setGroup(Group $group)
+    {
+        $this->group = $group;
+        $this->group->addNews($this);
+    }
 }
 
