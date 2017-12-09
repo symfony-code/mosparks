@@ -6,8 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
-use DateTime;
 use Doctrine\ORM\Mapping\ManyToOne;
+use DateTime;
 
 /**
  * News
@@ -78,20 +78,6 @@ class News
      */
     private $group;
 
-    /** @PrePersist */
-    public function doStuffOnPrePersist()
-    {
-        $this->createdAt = new DateTime();
-        $this->updatedAt = new DateTime();
-    }
-
-    /**
-     * @PreUpdate
-     */
-    public function doStuffOnPreUpdate()
-    {
-        $this->updatedAt = new DateTime();
-    }
 
     /**
      * Get id
@@ -251,7 +237,7 @@ class News
     /**
      * @return Group
      */
-    public function getGroup(): Group
+    public function getGroup(): ?Group
     {
         return $this->group;
     }
@@ -263,6 +249,21 @@ class News
     {
         $this->group = $group;
         $this->group->addNews($this);
+    }
+
+    /** @PrePersist */
+    public function doStuffOnPrePersist()
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @PreUpdate
+     */
+    public function doStuffOnPreUpdate()
+    {
+        $this->updatedAt = new DateTime();
     }
 }
 

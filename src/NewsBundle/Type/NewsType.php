@@ -10,6 +10,7 @@ namespace NewsBundle\Type;
 
 
 use NewsBundle\Help\NewsHelp;
+use NewsBundle\Transformer\GroupTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,6 +25,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class NewsType extends AbstractType
 {
+    /**
+     * @var GroupTransformer
+     */
+    private $groupTransformer;
+
+    /**
+     * NewsType constructor.
+     * @param GroupTransformer $groupTransformer
+     */
+    public function __construct(GroupTransformer $groupTransformer)
+    {
+
+        $this->groupTransformer = $groupTransformer;
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -39,10 +54,16 @@ class NewsType extends AbstractType
             ->add('title', TextType::class)
             ->add('announce', TextareaType::class)
             ->add('text', TextareaType::class)
+            ->add('group', TextType::class)
             ->add('hidden', ChoiceType::class, ['choices' => NewsHelp::getHiddenDropDown()])
             ->add('save', SubmitType::class, ['label' => $options['label']]);
+
+        $builder->get('group')->addModelTransformer($this->groupTransformer);
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
