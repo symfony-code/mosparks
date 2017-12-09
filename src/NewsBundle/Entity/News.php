@@ -245,10 +245,12 @@ class News
     /**
      * @param Group $group
      */
-    public function setGroup(Group $group)
+    public function setGroup(Group $group = null)
     {
         $this->group = $group;
-        $this->group->addNews($this);
+        if (!is_null($group)) {
+            $this->group->addNews($this);
+        }
     }
 
     /** @PrePersist */
