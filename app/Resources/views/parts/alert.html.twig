@@ -1,0 +1,29 @@
+{% block alert_widget %}
+    {% set flashes = app.flashes %}
+    {{ block('alert_array') }}
+{% endblock alert_widget %}
+
+{% block alert_array %}
+    {% for key, messages in flashes %}
+        {% if messages is iterable %}
+            {% for message in messages %}
+                {{ block('alert') }}
+            {% endfor %}
+        {% else %}
+            {% set message = messages %}
+            {{ block('alert') }}
+        {% endif %}
+    {% endfor %}
+{% endblock alert_array %}
+
+{% block alert %}
+    {% set alert = {'info': 'alert-info', 'danger': 'alert-danger', 'success': 'alert-success', 'warning': 'alert-warning'} %}
+    {% if attribute(alert, key) is defined %}
+        <div class="alert alert-{{ key }}" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+    {% endif %}
+{% endblock alert %}

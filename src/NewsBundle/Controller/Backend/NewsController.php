@@ -36,6 +36,7 @@ class NewsController extends Controller
         $models = $newRepository->findAll();
 
 
+
         return $this->render('news/backend/news/index.html.twig', ['models' => $models]);
     }
 
@@ -56,6 +57,9 @@ class NewsController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($news);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Success');
+
             return new RedirectResponse($this->generateUrl('newsView', ['id' => $news->getId()]));
         }
 
@@ -95,6 +99,8 @@ class NewsController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
+            $this->addFlash('success', 'Success');
+
             return new RedirectResponse($this->generateUrl('newsView', ['id' => $news->getId()]));
         }
 
@@ -114,6 +120,7 @@ class NewsController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($news);
         $entityManager->flush();
+        $this->addFlash('success', 'Success');
         return new RedirectResponse($this->generateUrl('newsIndex'));
     }
 

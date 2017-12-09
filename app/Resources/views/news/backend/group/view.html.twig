@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block breadcrumbs %}
     {% set breadcrumbs = [{'url': path('newsGroupIndex'), 'label': 'Группы новостей'}, {'label': model.title}] %}
     {% include 'parts/breadcrumbs.html.twig' with breadcrumbs %}
+{% endblock %}
+
+{% block body %}
     <h1>{{ model.title }}</h1>
 
     <p>

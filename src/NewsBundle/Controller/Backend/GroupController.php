@@ -54,7 +54,7 @@ class GroupController extends Controller
             $model = $form->getData();
             $entityManager->persist($model);
             $entityManager->flush();
-
+            $this->addFlash('success', 'Success');
             return new RedirectResponse($this->generateUrl('newsGroupView', ['id' => $model->getId()]));
         }
 
@@ -97,7 +97,7 @@ class GroupController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
-
+            $this->addFlash('success', 'Success');
             return new RedirectResponse($this->generateUrl('newsGroupView', ['id' => $model->getId()]));
         }
 
@@ -115,6 +115,7 @@ class GroupController extends Controller
         $model = $this->find($id);
         $entityManager->remove($model);
         $entityManager->flush();
+        $this->addFlash('success', 'Success');
         return new RedirectResponse($this->generateUrl('newsGroupIndex'));
     }
 

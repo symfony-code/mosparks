@@ -5,9 +5,14 @@
     {{ title }}
 {% endblock %}
 
-{% block body %}
+{% block breadcrumbs %}
     {% set breadcrumbs = {'breadcrumbs' : [{'label': title}]} %}
     {% include 'parts/breadcrumbs.html.twig' with breadcrumbs %}
+{% endblock %}
+
+
+{% block body %}
+
 
     <h1>{{ title }}</h1>
 

@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
+{% block breadcrumbs %}
     {% set breadcrumbs = {'breadcrumbs' : [{'url': path('newsIndex'), 'label': 'Новости'},{'label': 'Создать'}]} %}
     {% include 'parts/breadcrumbs.html.twig' with breadcrumbs %}
+{% endblock %}
+
+{% block body %}
+
+
     {% include '/news/backend/news/form.html.twig' %}
 {% endblock %}

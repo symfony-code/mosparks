@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 {% set title = model.title %}
 
-{% block body %}
+{% block breadcrumbs %}
     {% set breadcrumbs = {'breadcrumbs' : [{'url': path('newsIndex'), 'label': 'Новости'},{'label': title}]} %}
     {% include 'parts/breadcrumbs.html.twig' with breadcrumbs %}
+{% endblock %}
+
+{% block body %}
     <h1>{{ title }}</h1>
     <p><a href="{{ path('newsUpdate', {'id': model.id}) }}" class="btn-primary btn">Редактировать</a></p>
 
