@@ -47,7 +47,7 @@ class NewsController extends Controller
     public function createAction(Request $request)
     {
         $news = new News();
-        $form = $this->createForm(NewsType::class, $news);
+        $form = $this->createForm(NewsType::class, $news, ['label' => 'Создать']);
 
         $form->handleRequest($request);
 
@@ -87,7 +87,7 @@ class NewsController extends Controller
         $news = $repository->find($id);
         $this->notFoundException($news);
 
-        $form = $this->createForm(NewsType::class, $news);
+        $form = $this->createForm(NewsType::class, $news, ['label' => 'Редактировать']);
 
         $form->handleRequest($request);
 

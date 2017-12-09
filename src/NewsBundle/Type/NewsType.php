@@ -31,13 +31,24 @@ class NewsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if (is_null($options['label'])) {
+            throw new \RuntimeException('Configuration error of form');
+        }
 
         $builder
             ->add('title', TextType::class)
             ->add('announce', TextareaType::class)
             ->add('text', TextareaType::class)
             ->add('hidden', ChoiceType::class, ['choices' => NewsHelp::getHiddenDropDown()])
-            ->add('save', SubmitType::class, ['label' => 'Создать']);
+            ->add('save', SubmitType::class, ['label' => $options['label']]);
     }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'label' => null,
+        ]);
+    }
+
 
 }
