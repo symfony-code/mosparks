@@ -16,6 +16,9 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\ORM\Mapping\PrePersist;
 
 /**
  * Class Group
@@ -23,6 +26,7 @@ use Doctrine\ORM\Mapping\Column;
  *
  * @Entity(repositoryClass="NewsBundle\Repository\GroupRepository")
  * @Mapping\Table(name="news_group")
+ * @HasLifecycleCallbacks
  */
 class Group
 {
@@ -39,13 +43,13 @@ class Group
      * @var string
      * @Mapping\Column(name="title")
      */
-    private $title;
+    private $title = '';
 
     /**
      * @var bool
      * @Mapping\Column(name="hidden", type="boolean")
      */
-    private $hidden;
+    private $hidden = false;
 
     /**
      * @var DateTime
@@ -158,5 +162,20 @@ class Group
     public function getNews()
     {
         return $this->news;
+    }
+
+    /** @PrePersist */
+    public function doStuffOnPrePersist()
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @PreUpdate
+     */
+    public function doStuffOnPreUpdate()
+    {
+        $this->updatedAt = new DateTime();
     }
 }

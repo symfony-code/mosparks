@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% set title = 'Группы новостей' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    {% set breadcrumbs = {'breadcrumbs' : [{'label': title}]} %}
+    {% include 'parts/breadcrumbs.html.twig' with breadcrumbs %}
+
+    <h1>{{ title }}</h1>
+
+    <p>
+        <a href="{{ path("newsGroupCreate") }}" class="btn btn-primary">Создать</a>
+    </p>
+
+    <h1></h1>
+    <table class="table">
+        <tr>
+            <td>Название</td>
+            <td>Скрыто</td>
+            <td></td>
+        </tr>
+        {% for model in models %}
+            <tr>
+                <td>{{ model.title }}</td>
+                <td>{{ model.hidden ? 'Нет': 'Да' }}</td>
+                <td>
+                    <a href="{{ path('newsGroupView', {'id': model.id}) }}"><span
+                                class="glyphicon glyphicon-eye-open"></span></a>
+                    <a href="{{ path('newsGroupDelete', {'id': model.id}) }}"><span
+                                class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

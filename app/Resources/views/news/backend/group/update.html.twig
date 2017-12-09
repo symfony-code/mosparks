@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set breadcrumbs = {'breadcrumbs' : [{'label': 'Группы новостей', 'url': path('newsGroupIndex')}, {'label': 'Редактировать'}]} %}
+    {% include 'parts/breadcrumbs.html.twig' with breadcrumbs %}
+    {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
