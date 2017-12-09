@@ -9,10 +9,8 @@
 namespace NewsBundle\Type;
 
 
-use Doctrine\ORM\EntityManagerInterface;
 use NewsBundle\Entity\Group;
 use NewsBundle\Help\NewsHelp;
-use NewsBundle\Transformer\GroupTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -28,28 +26,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class NewsType extends AbstractType
 {
-    /**
-     * @var GroupTransformer
-     */
-    private $groupTransformer;
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * NewsType constructor.
-     * @param GroupTransformer $groupTransformer
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(
-        GroupTransformer $groupTransformer,
-        EntityManagerInterface $entityManager
-    )
-    {
-        $this->groupTransformer = $groupTransformer;
-        $this->entityManager = $entityManager;
-    }
 
     /**
      * @param FormBuilderInterface $builder
