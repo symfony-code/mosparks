@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\Validator\Constraints\File;
 use DateTime;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 /**
  * News
@@ -52,6 +55,19 @@ class News
     private $text;
 
     /**
+     * @var string
+     * @ORM\Column(name="image", type="string", length=1024);
+     * @File(mimeTypes={ "image/*" });
+     */
+    private $image = '';
+
+    /**
+     * @var Group
+     * @ManyToOne(targetEntity="Group", inversedBy="news")
+     */
+    private $group;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="hidden", type="boolean")
@@ -71,12 +87,6 @@ class News
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-    /**
-     * @var Group
-     * @ManyToOne(targetEntity="Group", inversedBy="news")
-     */
-    private $group;
 
 
     /**
@@ -177,6 +187,42 @@ class News
     }
 
     /**
+     * @return Group
+     */
+    public function getGroup(): ?Group
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param Group $group
+     */
+    public function setGroup(Group $group = null)
+    {
+        $this->group = $group;
+        if (!is_null($group)) {
+            $this->group->addNews($this);
+        }
+    }
+
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return string|UploadedFile
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
      * Get hidden
      *
      * @return bool
@@ -210,6 +256,7 @@ class News
         return $this->createdAt;
     }
 
+
     /**
      * Set updatedAt
      *
@@ -234,24 +281,7 @@ class News
         return $this->updatedAt;
     }
 
-    /**
-     * @return Group
-     */
-    public function getGroup(): ?Group
-    {
-        return $this->group;
-    }
 
-    /**
-     * @param Group $group
-     */
-    public function setGroup(Group $group = null)
-    {
-        $this->group = $group;
-        if (!is_null($group)) {
-            $this->group->addNews($this);
-        }
-    }
 
     /** @PrePersist */
     public function doStuffOnPrePersist()

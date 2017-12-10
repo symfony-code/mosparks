@@ -8,6 +8,7 @@
 
 namespace NewsBundle\Controller\Backend;
 
+use NewsBundle\Service\NewsImageService;
 use Symfony\Component\Routing\Annotation\Route;
 use NewsBundle\Entity\News;
 use NewsBundle\Type\NewsType;
@@ -24,6 +25,16 @@ use Symfony\Component\HttpFoundation\Response;
 class NewsController extends Controller
 {
     /**
+     * @var NewsImageService
+     */
+    private $newsImageService;
+
+    public function __construct(NewsImageService $newsImageService)
+    {
+        $this->newsImageService = $newsImageService;
+    }
+
+    /**
      * @Route("/news", name="newsIndex");
      * @return Response
      */
@@ -35,8 +46,6 @@ class NewsController extends Controller
 
         $models = $newRepository->findAll();
 
-
-
         return $this->render('news/backend/news/index.html.twig', ['models' => $models]);
     }
 
@@ -47,20 +56,20 @@ class NewsController extends Controller
      */
     public function createAction(Request $request)
     {
-        $news = new News();
-        $form = $this->createForm(NewsType::class, $news, ['label' => 'Создать']);
+        $model = new News();
 
+        $form = $this->createForm(NewsType::class, $model, ['label' => 'Создать']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $news = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($news);
-            $entityManager->flush();
 
+            $this->newsImageService->upload($model);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($model);
+            $entityManager->flush();
             $this->addFlash('success', 'Success');
 
-            return new RedirectResponse($this->generateUrl('newsView', ['id' => $news->getId()]));
+            return new RedirectResponse($this->generateUrl('newsView', ['id' => $model->getId()]));
         }
 
         return $this->render('news/backend/news/create.html.twig', ['form' => $form->createView()]);
@@ -73,10 +82,8 @@ class NewsController extends Controller
      */
     public function viewAction(int $id)
     {
-        $repository = $this->getDoctrine()->getRepository(News::class);
-        $news = $repository->find($id);
-        $this->notFoundException($news);
-        return $this->render('news/backend/news/view.html.twig', ['model' => $news]);
+        $model = $this->find($id);
+        return $this->render('news/backend/news/view.html.twig', ['model' => $model]);
     }
 
     /**
@@ -87,21 +94,22 @@ class NewsController extends Controller
      */
     public function updateAction(int $id, Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository(News::class);
-        $news = $repository->find($id);
-        $this->notFoundException($news);
+        $model = $this->find($id);
 
-        $form = $this->createForm(NewsType::class, $news, ['label' => 'Редактировать']);
+        $form = $this->createForm(NewsType::class, $model, ['label' => 'Редактировать']);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->newsImageService->upload($model);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
             $this->addFlash('success', 'Success');
 
-            return new RedirectResponse($this->generateUrl('newsView', ['id' => $news->getId()]));
+            return new RedirectResponse($this->generateUrl('newsView', ['id' => $model->getId()]));
         }
 
         return $this->render('news/backend/news/update.html.twig', ['form' => $form->createView()]);
@@ -113,15 +121,26 @@ class NewsController extends Controller
      * @param $id
      * @return RedirectResponse
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
-        $repository = $this->getDoctrine()->getRepository(News::class);
-        $news = $repository->find($id);
+        $model = $this->find($id);
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($news);
+        $entityManager->remove($model);
         $entityManager->flush();
         $this->addFlash('success', 'Success');
         return new RedirectResponse($this->generateUrl('newsIndex'));
+    }
+
+    /**
+     * @param $id
+     * @return News|object
+     */
+    public function find(int $id): News
+    {
+        $repository = $this->getDoctrine()->getRepository(News::class);
+        $model = $repository->find($id);
+        $this->notFoundException($model);
+        return $model;
     }
 
     /**
@@ -130,7 +149,7 @@ class NewsController extends Controller
     public function notFoundException(News $model = null)
     {
         if (is_null($model)) {
-            throw $this->createNotFoundException();
+            throw $this->createNotFoundException('Not found');
         }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace NewsBundle\Repository;
 
+use NewsBundle\Entity\News;
+
 /**
  * NewsRepository
  *
@@ -10,4 +12,16 @@ namespace NewsBundle\Repository;
  */
 class NewsRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @param mixed $id
+     * @param null $lockMode
+     * @param null $lockVersion
+     * @return null|object|News
+     */
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        return parent::find($id, $lockMode, $lockVersion);
+    }
+
 }
