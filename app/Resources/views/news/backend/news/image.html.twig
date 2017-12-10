@@ -1,0 +1,10 @@
+{% block file_widget %}
+
+    {% if form.parent.vars.imageName is defined %}
+        <div class="thumbnail">
+            <img src="/uploads/news/{{ form.parent.vars.imageName }}" alt="">
+        </div>
+    {% endif %}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+{% endblock %}

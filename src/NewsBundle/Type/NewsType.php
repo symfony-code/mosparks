@@ -20,6 +20,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -73,6 +75,17 @@ class NewsType extends AbstractType
             ->add('save', SubmitType::class, ['label' => $options['label']]);
     }
 
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        /** @var News $news */
+        $news = $form->getData();
+
+        if (!is_null($news->getId()) && !empty($news->getImage())) {
+            $view->vars['imageName'] = $news->getImage();
+        }
+    }
+
+
     /**
      * @param OptionsResolver $resolver
      */
@@ -83,6 +96,4 @@ class NewsType extends AbstractType
             'data_class' => News::class,
         ]);
     }
-
-
 }
