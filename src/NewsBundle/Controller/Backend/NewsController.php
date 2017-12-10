@@ -35,7 +35,7 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("/news", name="newsIndex");
+     * @Route("cp/news", name="newsIndex");
      * @return Response
      */
     public function indexAction()
@@ -50,7 +50,7 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("/news/create", name="newsCreate")
+     * @Route("cp/news/create", name="newsCreate")
      *
      * @return Response
      */
@@ -76,7 +76,7 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("/news/view/{id}", name="newsView", requirements={"id": "\d+"})
+     * @Route("cp/news/view/{id}", name="newsView", requirements={"id": "\d+"})
      * @param $id
      * @return Response
      */
@@ -87,7 +87,7 @@ class NewsController extends Controller
     }
 
     /**
-     * @Route("/news/update/{id}", name="newsUpdate", requirements={"id": "\d+"})
+     * @Route("cp/news/update/{id}", name="newsUpdate", requirements={"id": "\d+"})
      * @param int $id
      * @param Request $request
      * @return Response
@@ -117,7 +117,7 @@ class NewsController extends Controller
 
 
     /**
-     * @Route("news/delete/{id}", name="newsDelete", requirements={"id": "\d+"})
+     * @Route("cp/news/delete/{id}", name="newsDelete", requirements={"id": "\d+"})
      * @param $id
      * @return RedirectResponse
      */

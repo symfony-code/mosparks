@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class GroupController extends Controller
 {
     /**
-     * @Route("/news/group", name="newsGroupIndex");
+     * @Route("cp/news/group", name="newsGroupIndex");
      */
     public function indexAction()
     {
@@ -35,7 +35,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/news/group/create", name="newsGroupCreate")
+     * @Route("cp/news/group/create", name="newsGroupCreate")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -67,7 +67,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/news/group/view/{id}", name="newsGroupView",requirements={"id": "\d+"})
+     * @Route("cp/news/group/view/{id}", name="newsGroupView",requirements={"id": "\d+"})
      * @param $id
      * @return Response
      */
@@ -79,7 +79,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/news/group/update/{id}", name="newsGroupUpdate", requirements={"id": "\d+"})
+     * @Route("cp/news/group/update/{id}", name="newsGroupUpdate", requirements={"id": "\d+"})
      * @param int $id
      * @param Request $request
      * @return RedirectResponse|Response
@@ -105,7 +105,7 @@ class GroupController extends Controller
     }
 
     /**
-     * @Route("/news/group/delete/{id}", name="newsGroupDelete", requirements={"id": "\d+"})
+     * @Route("cp/news/group/delete/{id}", name="newsGroupDelete", requirements={"id": "\d+"})
      * @param $id
      * @return RedirectResponse
      */
