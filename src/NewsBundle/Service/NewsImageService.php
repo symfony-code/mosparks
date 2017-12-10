@@ -10,8 +10,6 @@ namespace NewsBundle\Service;
 
 
 use NewsBundle\Entity\News;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class NewsImageService
@@ -19,19 +17,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class NewsImageService
 {
-
     /**
-     * @var ContainerInterface
+     * @var string
      */
-    private $container;
+    private $dir;
 
     /**
      * NewsImageService constructor.
-     * @param ContainerInterface $container
+     * @param string $dir
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(string $dir)
     {
-        $this->container = $container;
+        $this->dir = $dir;
     }
 
 
@@ -44,9 +41,10 @@ class NewsImageService
 
         $name = md5(uniqid()) . '.' . $image->guessExtension();
         $image->move(
-            $this->container->getParameter('news_upload_image'),
+            $this->dir,
             $name
         );
+
         $model->setImage($name);
     }
 }

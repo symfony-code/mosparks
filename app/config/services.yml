@@ -36,3 +36,11 @@ services:
 
     NewsBundle\:
         resource: '../../src/NewsBundle/*'
+
+    NewsBundle\Service\NewsImageService:
+        arguments:
+            $dir: '%news_upload_image%'
+
+    NewsBundle\Type\NewsType:
+        arguments:
+            $dir: '%news_upload_image%'

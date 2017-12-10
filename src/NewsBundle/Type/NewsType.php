@@ -13,7 +13,6 @@ use NewsBundle\Entity\Group;
 use NewsBundle\Entity\News;
 use NewsBundle\Help\NewsHelp;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -31,13 +30,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class NewsType extends AbstractType
 {
     /**
-     * @var ContainerInterface
+     * @var string
      */
-    private $container;
+    private $dir;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(string $dir)
     {
-        $this->container = $container;
+        $this->dir = $dir;
     }
 
     /**
@@ -56,7 +55,7 @@ class NewsType extends AbstractType
         $news = $options['data'];
 
         if (!is_null($news->getId()) && !empty($news->getImage())) {
-            $image = new File($this->container->getParameter('news_upload_image') . '/' . $news->getImage());
+            $image = new File($this->dir . '/' . $news->getImage());
         }
 
         $builder
