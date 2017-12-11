@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\PrePersist;
+use NewsBundle\Constraint\UniqueGroup;
 
 /**
  * Class Group
@@ -42,6 +43,7 @@ class Group
     /**
      * @var string
      * @Column(name="title", unique=true)
+     * @UniqueGroup()
      */
     private $title = '';
 
