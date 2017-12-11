@@ -41,7 +41,7 @@ class Group
 
     /**
      * @var string
-     * @Mapping\Column(name="title")
+     * @Column(name="title", unique=true)
      */
     private $title = '';
 

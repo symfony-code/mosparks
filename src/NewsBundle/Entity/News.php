@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Validator\Constraints\File;
+use Doctrine\ORM\Mapping\Column;
 use DateTime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -27,7 +28,7 @@ class News
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -36,27 +37,27 @@ class News
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="announce", type="text")
+     * @Column(name="announce", type="text")
      */
     private $announce;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="text", type="text")
+     * @Column(name="text", type="text")
      */
     private $text;
 
     /**
      * @var string
-     * @ORM\Column(name="image", type="string", length=1024);
+     * @Column(name="image", type="string", length=1024);
      * @File(mimeTypes={ "image/*" });
      */
     private $image = '';
@@ -70,7 +71,7 @@ class News
     /**
      * @var bool
      *
-     * @ORM\Column(name="hidden", type="boolean")
+     * @Column(name="hidden", type="boolean", options={"default": "0"})
      */
     private $hidden;
 
