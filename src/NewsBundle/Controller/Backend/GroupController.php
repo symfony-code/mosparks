@@ -9,6 +9,7 @@
 namespace NewsBundle\Controller\Backend;
 
 use Doctrine\ORM\EntityRepository;
+use Knp\Component\Pager\Paginator;
 use Symfony\Component\Routing\Annotation\Route;
 use NewsBundle\Entity\Group;
 use NewsBundle\Type\GroupType;
@@ -31,6 +32,7 @@ class GroupController extends Controller
         $query = $groupRepository->createQueryBuilder('a')->getQuery();
 
 
+        /** @var Paginator $paginator */
         $paginator = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
