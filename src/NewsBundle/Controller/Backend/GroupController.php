@@ -8,6 +8,7 @@
 
 namespace NewsBundle\Controller\Backend;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use NewsBundle\Entity\Group;
 use NewsBundle\Type\GroupType;
@@ -20,16 +21,30 @@ class GroupController extends Controller
 {
     /**
      * @Route("cp/news/group", name="newsGroupIndex");
+     * @param Request $request
+     * @return Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        /** @var EntityRepository $groupRepository */
         $groupRepository = $this->getDoctrine()->getRepository(Group::class);
-        $models = $groupRepository->findAll();
+        $query = $groupRepository->createQueryBuilder('a')->getQuery();
+
+
+        $paginator = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            5
+        );
+
 
         return $this->render(
             'news/backend/group/index.html.twig',
             [
-                'models' => $models,
+                'models' => $query->getResult(),
+                'pagination' => $pagination,
             ]
         );
     }

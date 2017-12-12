@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% set title = 'Группы новостей' %}
 
+
 {% block title %}
     {{ title }}
 {% endblock %}
@@ -20,17 +21,22 @@
         <a href="{{ path("newsGroupCreate") }}" class="btn btn-primary">Создать</a>
     </p>
 
-    <h1></h1>
+    <div class="count">
+        {{ pagination.getTotalItemCount }}
+    </div>
     <table class="table">
         <tr>
-            <td>Название</td>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'ID', 'a.id') }}</th>
+            <th{% if pagination.isSorted('a.title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Название', 'a.title') }}</th>
             <td>Скрыто</td>
             <td></td>
         </tr>
         {% for model in models %}
             <tr>
+                <td>{{ model.id }}</td>
                 <td>{{ model.title }}</td>
-                <td>{{ model.hidden ? 'Нет': 'Да' }}</td>
+                <td>{{ not model.hidden ? 'Нет': 'Да' }}</td>
                 <td>
                     <a href="{{ path('newsGroupView', {'id': model.id}) }}"><span
                                 class="glyphicon glyphicon-eye-open"></span></a>
@@ -40,4 +46,11 @@
             </tr>
         {% endfor %}
     </table>
+
+
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
 {% endblock %}
